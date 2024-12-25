@@ -14,8 +14,8 @@ https://www.notion.so/f7fd6e3597704978a7f00f32900a906e
 
 &nbsp;
 ## 연구 방법
-1. 모델 커스텀하는 과정
-2. 사용한 평가지표
+### 1. 모델 커스텀하는 과정
+### 2. 사용한 평가지표
 
 ![image](https://github.com/user-attachments/assets/1a020a83-83f7-4e55-9306-2aea90e30432)
 ![image](https://github.com/user-attachments/assets/8a8431c8-0a7c-4111-9f81-ca0a42a7e8ae)
@@ -24,17 +24,17 @@ https://www.notion.so/f7fd6e3597704978a7f00f32900a906e
 ![image](https://github.com/user-attachments/assets/3f51626a-bafe-4949-9e0e-49e6e02d95c3)
 
 
-3. 데이터 수집
+### 3. 데이터 수집
 
 
 ## 모델 선택
-1. AutoEncoder (AE)
-2. Variational AutoEncoder (VAE)
-3. Conditional GAN
-4. StarGAN
-5. StarGANv2
-6. Conditional Diffusion
-7. Transformer Encoder, Decoder
+### 1. AutoEncoder (AE)
+### 2. Variational AutoEncoder (VAE)
+### 3. Conditional GAN
+### 4. StarGAN
+### 5. StarGANv2
+### 6. Conditional Diffusion
+### 7. Transformer Encoder, Decoder
 
 
 
