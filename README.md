@@ -94,12 +94,27 @@ SSIM, PSNR 값이 평균적으로 낮은 값으로 기록되어 품질이 좋지
 
 ## 모델 변형
 ### 1. VAE + loss
-VAE에 Perceptual Loss (z_mean 기반)을 추가하였습니다.
+VAE에 Perceptual Loss (z_mean 기반)을 추가하여 생성 이미지의 디테일과 품질을 개선했습니다.
+복잡한 데이터셋에 대한 복원 성능이 제한적이었고, 학습 도중 잠재 공간의 일부 변수가 비활성화되는 문제 (Posterior Collapse)도 발생했습니다.
 ### 2.CycleGAN + Attention Mechanism[Generator]
+CycleGAN에 self attention을 추가하였습니다. 이 시도에서는 Generator에만 추가했습니다.
 ### 3.CycleGAN + Attention Mechanism[Generator & Discriminator]
+CycleGAN에 self attention을 추가하였습니다. 생성자와 판별자 모두에 추가했습니다.
+ Attention 메커니즘을 생성기와 판별기에 추가했습니다.
 ### 4.Stable Diffusion [Training with LoRA]
+Stable Diffusion 모델에 LoRA (Low-Rank Adaptation)를 적용해 수술 전-후 이미지 변환을 훈련하고 결과를 생성하였습니다. Stable Diffusion의 UNet 계층에 LoRA를 추가해 가중치 일부만 학습했고, r=4(랭크), alpha=32(스케일링) 설정을 했습니다. before 이미지를 입력으로 받아, after 이미지와 비슷한 결과를 생성했고 생성 이미지와 실제 after 이미지 간 손실(MSE)을 계산해 모델을 업데이트합니다. LoRA로 특정 가중치만 학습하여 자원을 절약해서 몹시 효율적입니다. 사용한 프롬프트는 다음과 같습니다.
+A professional portrait of a person after surgery
+이를 이용해서 특정 부위의 성형을 한 것을 잘 표현할 수 있다고 생각했습니다. 하지만 일단 저희의 데이터셋에 따라 전체적인 얼굴로만 프롬프트를 설정하고 모델을 훈련했습니다.
+그러나 프롬프트 (A professional portrait of a person after surgery)의 영향을 너무 심하게 받는 경향이 있어 폐기했습니다.
+
 ### 5.StarGAN + Self-Attention [Generator]
+StarGAN의 Generator에 Self-Attention을 추가하여 Generator의 성능을 강화하고자 하였고, 기존 CNN 방식만 사용한 모델과 다르게 Attention을 추가함으로써 지엽적 부분뿐만 아니라, 문맥적 부분도 학습할 수 있을 것이라는 가정을 하고 만든 모델입니다. 그 결과는 그렇게 좋지 못하였고, 특정 부분에 강하게 집중하는 모습을 보이는 듯하지만, 사람의 얼굴을 정확하게 표현하지 못하는 모습을 보였습니다.
 ### 6.StarGAN + Multi-Head Attention [Generator]
+이전 모델에서 Self-Attention 모듈의 개수를 늘려 Multi-Head Attention 구조를 적용하였습니다. 이를 통해, Generator가 더 다양한 패턴에 주의를 기울이고 이미지 전반에 걸쳐 풍부한 표현력을 학습할 수 있을 것이라는 가정을 바탕으로 실험을 진행하였습니다. 그러나 결과는 기대에 미치지 못하였고, 너무 많은 변형을 일으키는 것을 확인하였습니다.
 ### 7.StarGAN + Self-Attention [Generator] (Loss Ratio Adjustment)
+이미지 변형에 제한을 걸기 위하여 Reconstruction Loss의 비율을 대폭 
+   상승시켰습니다. 그렇지만, 좋지 못한 결과를 불러왔습니다.
 ### 8.StarGAN + Multi-Head Attention [Generator] (Loss Ratio djustment)
+이미지 변형에 제한을 걸기 위하여 Reconstruction Loss의 비율을 대폭 
+  상승시켰습니다. 그렇지만, 좋지 못한 결과를 불러왔습니다.
 ### 9.StarGAN + Self-Attention [Generator & Discriminator] (Loss Ratio Adjustment)
