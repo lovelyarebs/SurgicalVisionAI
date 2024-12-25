@@ -118,3 +118,10 @@ StarGAN의 Generator에 Self-Attention을 추가하여 Generator의 성능을 �
 이미지 변형에 제한을 걸기 위하여 Reconstruction Loss의 비율을 대폭 
   상승시켰습니다. 그렇지만, 좋지 못한 결과를 불러왔습니다.
 ### 9.StarGAN + Self-Attention [Generator & Discriminator] (Loss Ratio Adjustment)
+ 이미지 변형에 제한을 걸기 위하여 Reconstruction Loss의 비율을 대폭 
+상승시켰습니다. 또한 Generator뿐만 아니라, Discriminator의 역량도 늘려야 정확한 학습을 할 것으로 파악하였고, 그 결과 어느 정도 잘 변형도 일어나면서, 얼굴의 표현도 이전보다 많이 명확해진 것을 확인할 수 있었습니다
+
+
+
+## 제안 모델
+
