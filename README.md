@@ -14,17 +14,35 @@ https://www.notion.so/f7fd6e3597704978a7f00f32900a906e
 
 &nbsp;
 ## 연구 방법
-### 1. 모델 커스텀하는 과정
-### 2. 사용한 평가지표
+저희는 성형 전후 이미지를 활용한 연구를 위해 기존 모델 구조를 데이터에 맞게 커스텀하였습니다.
+정량적 평가와 함께 사람이 직접 생성 결과를 눈으로 확인하는 정성적 평가도 수행하였습니다. 결과는 시각화하여 모델의 생성 품질을 직관적으로 파악하고, 모델 개선 방향성을 분석하는 데 활용했습니다. 
+기존의 모델들을 학습시켜 출력된 이미지와 평가지표를 분석한 뒤, 이를 바탕으로 모델을 변형하여 새로운 제안 모델을 개발하였습니다.
+
+### 1. 데이터 준비 및 전처리
+성형 전(before) 이미지를 입력, 성형 후(after) 이미지를 출력으로 구성된 데이터셋을 생성.
+데이터를 학습(train)과 테스트(test)로 분리.
+이미지 크기를 512x512로 리사이즈하고, 픽셀 값을 정규화([0, 1] 또는 [-1, 1]).
+데이터 증강(회전, 플립, 밝기 조정 등) 기법 적용.
+
+### 2. 모델 구성 및 학습
+
+성형 전 이미지를 입력, 성형 후 이미지를 출력으로 하는 생성형 모델로 구조를 개편.
+학습된 모델에 테스트 데이터의 성형 전 이미지를 입력하여 성형 후 이미지를 생성.
+
+
+### 3. 사용한 평가지표
 
 ![image](https://github.com/user-attachments/assets/1a020a83-83f7-4e55-9306-2aea90e30432)
+FID (Fréchet Inception Distance): 생성된 이미지와 실제 이미지의 유사성을 평가
 ![image](https://github.com/user-attachments/assets/8a8431c8-0a7c-4111-9f81-ca0a42a7e8ae)
+SSIM (Structural Similarity Index): 이미지의 구조적 유사성을 평가.
 ![image](https://github.com/user-attachments/assets/4b1f64ed-d364-46d8-b4be-31da3c9c5e40)
+PSNR (Peak Signal-to-Noise Ratio): 이미지의 신호 대 잡음 비율을 평가.
 ![image](https://github.com/user-attachments/assets/74db5916-1b7e-4d17-a3bc-c8733431dae1)
+IS (Inception Score): 생성된 이미지의 다양성과 품질을 평가.
 ![image](https://github.com/user-attachments/assets/3f51626a-bafe-4949-9e0e-49e6e02d95c3)
+LPIPS (Learned Perceptual Image Patch Similarity): 이미지 간의 지각적 유사성을 평가.
 
-
-### 3. 데이터 수집
 
 
 ## 모델 선택
