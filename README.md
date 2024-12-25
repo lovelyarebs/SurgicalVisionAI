@@ -13,7 +13,10 @@ https://www.notion.so/f7fd6e3597704978a7f00f32900a906e
 &nbsp;
 ## 연구 방법
 1. 모델 커스텀하는 과정
-2. 평가지표
+2. 사용한 평가지표
+![image](https://github.com/user-attachments/assets/1a020a83-83f7-4e55-9306-2aea90e30432)
+
+
 3. 데이터 수집
 
 
