@@ -23,6 +23,8 @@ https://www.notion.so/f7fd6e3597704978a7f00f32900a906e
 
 - 기존 모델을 학습한 결과와 분석을 바탕으로, 모델 구조를 변형하여 보다 적합한 새로운 제안 모델을 개발하였습니다.
 
+ 
+
 
 ### 1. 데이터 준비 및 전처리
 - **성형 전(before) 이미지를 입력, 성형 후(after) 이미지를 출력으로 구성된 데이터셋을 생성.**
@@ -40,15 +42,25 @@ https://www.notion.so/f7fd6e3597704978a7f00f32900a906e
 
 ### 3. 사용한 평가지표
 
-![image](https://github.com/user-attachments/assets/1a020a83-83f7-4e55-9306-2aea90e30432)
+- ![image](https://github.com/user-attachments/assets/1a020a83-83f7-4e55-9306-2aea90e30432)
+
+
 FID (Fréchet Inception Distance): 생성된 이미지와 실제 이미지의 유사성을 평가
-![image](https://github.com/user-attachments/assets/8a8431c8-0a7c-4111-9f81-ca0a42a7e8ae)
+- ![image](https://github.com/user-attachments/assets/8a8431c8-0a7c-4111-9f81-ca0a42a7e8ae)
+
+
 SSIM (Structural Similarity Index): 이미지의 구조적 유사성을 평가.
-![image](https://github.com/user-attachments/assets/4b1f64ed-d364-46d8-b4be-31da3c9c5e40)
+- ![image](https://github.com/user-attachments/assets/4b1f64ed-d364-46d8-b4be-31da3c9c5e40)
+
+
 PSNR (Peak Signal-to-Noise Ratio): 이미지의 신호 대 잡음 비율을 평가.
-![image](https://github.com/user-attachments/assets/74db5916-1b7e-4d17-a3bc-c8733431dae1)
+- ![image](https://github.com/user-attachments/assets/74db5916-1b7e-4d17-a3bc-c8733431dae1)
+
+
 IS (Inception Score): 생성된 이미지의 다양성과 품질을 평가.
-![image](https://github.com/user-attachments/assets/3f51626a-bafe-4949-9e0e-49e6e02d95c3)
+- ![image](https://github.com/user-attachments/assets/3f51626a-bafe-4949-9e0e-49e6e02d95c3)
+
+
 LPIPS (Learned Perceptual Image Patch Similarity): 이미지 간의 지각적 유사성을 평가.
 
 
@@ -63,17 +75,31 @@ LPIPS (Learned Perceptual Image Patch Similarity): 이미지 간의 지각적 �
 ### 1. AutoEncoder (AE)
 사람의 형태는 잘 잡히지만, 변형의 정도는 크게 나타나지 않았습니다.
 ### 2. Variational AutoEncoder (VAE)
-복원(생성) 과정에서 Latent Space로 데이터를 복원,생성하므로 //~~~~
+복원(생성) 과정에서 Latent Space로 데이터를 복원,생성하므로 이후 모델에 많이 응용되어 사용됐습니다.
 ### 3. Pix2Pix
 변환의 정도는 염색이 달라지고 그림처럼 바뀌는 정도였습니다
 ### 4. CycleGAN
 변환의 정도는 거의 달라지지 않았으며, 약간의 입술 색의 변화나 피부색의 변화를 보였습니다.
-### 4. Conditional GAN
 ### 5. StarGAN
+StarGAN은 다중 도메인 간의 변환을 학습하는 모델로, 다중 도메인이라고 할수있는 눈, 코, 턱을 학습시켜야 하는 저희에게는 가장 매력적으로 느껴지는 모델이었습니다. StarGAN의 구조는 여러 도메인을 하나의 모델로 처리할 수 있다는 점에서 저희가 지향하는 방식과 부합하였고, 변형의 정도도 얼굴의 형태 변화가 많이 일어나는 것으로 보였습니다.
 ### 6. StarGANv2
-### 7. Conditional Diffusion
-### 8. Transformer Encoder, Decoder
+성형 전 이미지를 입력으로 받아 성형 후의 스타일을 자연스럽게 생성했으며, 피부 톤, 윤곽 변화 등 세부적인 디테일까지 반영할 수 있었습니다. 
+### 7. Stable Diffusion
+입력 이미지를 잠재 공간(Latent Space)으로 변환한 후, 이를 기반으로 이미지를 복원하거나 새롭게 생성하는 딥러닝 모델입니다. 이는 고해상도의 사진 품질을 유지하면서 다양한 이미지 생성 작업을 수행할 수 있는 특징이 있습니다.
+### 8. 기본 GAN 모델
+SSIM, PSNR 값이 평균적으로 낮은 값으로 기록되어 품질이 좋지 않음을 알 수 있습니다. 그리고 LPIPS 값은 큰 편에 속하는데 생성된 이미지와 실제 이미지간의 지각적 차이가 큽니다. FID 값은 매우 높은 값이 나왔는데, 전체적인 이미지 품질과 생성된 데이터의 다양성이 부족함을 알 수 있습니다. 
+### 9. Style Transfer
+성형 후 특정 스타일을 학습해 성형 전 이미지를 해당 스타일로 변환하는 작업에 사용되었습니다. 결과의 세부적 변화가 부족했습니다.
 
 
-## 모델 개량
-
+## 모델 변형
+### 1. VAE + loss
+VAE에 Perceptual Loss (z_mean 기반)을 추가하였습니다.
+### 2.CycleGAN + Attention Mechanism[Generator]
+### 3.CycleGAN + Attention Mechanism[Generator & Discriminator]
+### 4.Stable Diffusion [Training with LoRA]
+### 5.StarGAN + Self-Attention [Generator]
+### 6.StarGAN + Multi-Head Attention [Generator]
+### 7.StarGAN + Self-Attention [Generator] (Loss Ratio Adjustment)
+### 8.StarGAN + Multi-Head Attention [Generator] (Loss Ratio djustment)
+### 9.StarGAN + Self-Attention [Generator & Discriminator] (Loss Ratio Adjustment)
