@@ -14,7 +14,12 @@ https://www.notion.so/f7fd6e3597704978a7f00f32900a906e
 ## 연구 방법
 1. 모델 커스텀하는 과정
 2. 사용한 평가지표
+
 ![image](https://github.com/user-attachments/assets/1a020a83-83f7-4e55-9306-2aea90e30432)
+![image](https://github.com/user-attachments/assets/8a8431c8-0a7c-4111-9f81-ca0a42a7e8ae)
+![image](https://github.com/user-attachments/assets/4b1f64ed-d364-46d8-b4be-31da3c9c5e40)
+![image](https://github.com/user-attachments/assets/74db5916-1b7e-4d17-a3bc-c8733431dae1)
+![image](https://github.com/user-attachments/assets/3f51626a-bafe-4949-9e0e-49e6e02d95c3)
 
 
 3. 데이터 수집
